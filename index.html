@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="HTML 交互原型在线展示中心" />
+  <title>交互原型中心 · Prototype Hub</title>
+  <style>
+    :root {
+      --bg:#070b14; --panel:#0e1526; --panel2:#121b30; --text:#f7f9fc;
+      --muted:#9ba9c2; --line:rgba(255,255,255,.09); --accent:#7c9cff;
+      --accent2:#65e0c1; --shadow:0 24px 70px rgba(0,0,0,.34);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; min-height:100vh; color:var(--text);
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+      background:
+        radial-gradient(circle at 10% -10%,rgba(124,156,255,.24),transparent 34%),
+        radial-gradient(circle at 100% 0%,rgba(101,224,193,.14),transparent 28%),
+        var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+    header{padding:28px 0 10px}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px}
+    .logo{
+      width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#07101d;font-weight:900;box-shadow:0 12px 30px rgba(124,156,255,.25)
+    }
+    .navlinks{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{
+      padding:10px 14px;border:1px solid var(--line);border-radius:12px;color:var(--muted);
+      background:rgba(255,255,255,.03);transition:.2s
+    }
+    .pill:hover{transform:translateY(-1px);color:var(--text);border-color:rgba(124,156,255,.45)}
+    .hero{padding:72px 0 38px;display:grid;grid-template-columns:1.35fr .65fr;gap:32px;align-items:center}
+    .eyebrow{color:var(--accent2);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    h1{font-size:clamp(42px,7vw,78px);line-height:.98;margin:14px 0 22px;letter-spacing:-.04em}
+    .lead{font-size:18px;line-height:1.8;color:var(--muted);max-width:760px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .btn{
+      border:1px solid var(--line);background:var(--panel);color:var(--text);padding:13px 18px;
+      border-radius:14px;font-weight:750;cursor:pointer;transition:.2s
+    }
+    .btn:hover{transform:translateY(-2px);border-color:rgba(124,156,255,.5)}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),#9c7cff);border-color:transparent;color:#07101d}
+    .qrbox{
+      justify-self:end;width:min(100%,310px);padding:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      border-radius:24px;box-shadow:var(--shadow)
+    }
+    .qrbox img{display:block;width:100%;aspect-ratio:1;background:#fff;border-radius:16px;padding:12px}
+    .qr-title{font-weight:800;margin-top:14px}
+    .qr-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px;word-break:break-all}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:26px 0 18px}
+    .section-head h2{margin:0;font-size:28px}
+    .section-head p{margin:0;color:var(--muted);font-size:14px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{
+      position:relative;min-height:220px;padding:20px;border:1px solid var(--line);border-radius:20px;
+      background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+      overflow:hidden;transition:.2s
+    }
+    .card:hover{transform:translateY(-3px);border-color:rgba(124,156,255,.45);box-shadow:0 18px 50px rgba(0,0,0,.24)}
+    .card::after{
+      content:"";position:absolute;right:-50px;bottom:-70px;width:170px;height:170px;border-radius:50%;
+      background:radial-gradient(circle,rgba(124,156,255,.18),transparent 67%);pointer-events:none
+    }
+    .tag{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(101,224,193,.09);color:var(--accent2);font-size:12px;font-weight:800}
+    .card h3{font-size:21px;margin:18px 0 8px}
+    .card p{color:var(--muted);line-height:1.65;font-size:14px;min-height:46px}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+    .meta span{font-size:12px;color:#c7d1e4;border:1px solid var(--line);padding:5px 8px;border-radius:8px}
+    .card-actions{display:flex;gap:10px;margin-top:auto}
+    .empty{
+      grid-column:1/-1;text-align:center;padding:56px 22px;border:1px dashed rgba(255,255,255,.16);
+      border-radius:20px;color:var(--muted);background:rgba(255,255,255,.018)
+    }
+    .empty strong{display:block;color:var(--text);font-size:20px;margin-bottom:8px}
+    .how{margin:54px 0 70px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .step{padding:18px;border-top:1px solid var(--line)}
+    .num{font-size:12px;color:var(--accent2);font-weight:900;letter-spacing:.1em}
+    .step h4{margin:10px 0 8px}
+    .step p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+    footer{border-top:1px solid var(--line);padding:24px 0 38px;color:var(--muted);font-size:13px}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#d8e2ff}
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr;padding-top:48px} .qrbox{justify-self:start;width:260px}
+      .grid{grid-template-columns:1fr 1fr} .how{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:580px){
+      .wrap{width:min(100% - 22px,1180px)} .navlinks{display:none} .hero{padding-top:36px}
+      h1{font-size:46px} .lead{font-size:16px} .grid,.how{grid-template-columns:1fr}
+      .qrbox{width:220px} .section-head{align-items:start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav>
+      <a class="brand" href="./"><span class="logo">P</span><span>Prototype Hub</span></a>
+      <div class="navlinks">
+        <a class="pill" href="#projects">项目</a>
+        <a class="pill" href="#workflow">使用方式</a>
+        <a class="pill" href="https://github.com/Ilya469/test" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Interactive Prototype Library</div>
+        <h1>交互原型<br>在线展示中心</h1>
+        <p class="lead">
+          用一个链接统一管理和展示 HTML 交互原型。客户可直接在线打开，也可以扫描二维码进入。
+          后续新增项目时，只需要把项目目录放入本站并增加一张项目卡片。
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">查看项目</a>
+          <button class="btn" id="copyBtn" type="button">复制本站链接</button>
+        </div>
+      </div>
+
+      <aside class="qrbox">
+        <img alt="本站二维码" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACmUlEQVR4nO2bQY7bMAxF30UKlF5Ah+gB9KhZhbZHOOMd0H8AfSxXoJrZTIgcxw1myOB5/5FpJx1m+JCAUgZ/qI8USYkK/aR4ZXz3/wVu3Lhx48aNGzdu3Lhx48aNGzdu3Lhx4xbF3cMXkV0+7AkmHq2crLfi47ZLwGvHgJaJoYuewp8+Z/g1F0+oPqKns26c83+s1/GTduvBbYs7j6w4cI23uWLKDrQyRIsvXKXa8Vt2HgWP20OuhTrPkxm5PujGjRt32AXGEaFby03zXi5zyi9lLAJha0caeaNQb2ht50D+P2R+9nbjxo3bBu4OvhGrFdwEFK4lbWSK2/JfjLCKq06P04wyYzRLwHvBLVAPgfchAVaWOxvkuO1OWh3cYpQZYofWKvy/uWi9cNOY+AmVtEs3TRwjWSao5ioQtc+tSeJTOVBE6SvVLbawRUWIu4BdIsieMHEFpI1guVyh5/UoZcVKhDaKoBuzat2C9JXk49Qqs2L5yFj3TcLvhiAH4Osn4jbGoUDUw9KH2pgK31TzVT0IqE8BXpryhWgID1cw45tkNi5gXt/g4pTjgTKQNHKJgfJa8mPVWVddOyrg1twUczA/w5Y9bE8KCIRCOjuvWffgLaUpSC1IqLw3/CcKRj4kDIdO0f/UUy4NWXwoeDZUVPYhORqMRir8CaABy/Pssjbnp1AEhkceehF5o+J+yCHohSUO2vpGOacEhhECgfBFl/ICprKCewkDIKF/wznCXXIWiQlQTv21urFuPJsdI+KJJf44jTMiieMgDmTSOsNZ+Ny7fXcePGLYNNA2PvE8q7Uc6BHVP67z9/kfg5zRNRgjys1wT0a5rRTVfn7bZCwX7+/59w48YNbxDsTzBkxHxVT15j7L+qT1iRKihT9+ybN27cuHHjxo0bN27cuHHjxo0bN27cuPHDxD8IOcBs4zYI/gAAAABJRU5ErkJggg==">
+        <div class="qr-title">手机扫码打开本站</div>
+        <div class="qr-sub">https://ilya469.github.io/test/</div>
+      </aside>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <div>
+          <h2>原型项目</h2>
+          <p>每个项目都可以拥有独立链接与二维码。</p>
+        </div>
+        <p id="count">0 个项目</p>
+      </div>
+
+      <div class="grid" id="projectGrid">
+        <div class="empty">
+          <strong>原型中心已经搭好</strong>
+          现在还没有加入实际 HTML 项目。把你的原型 ZIP / 文件夹交给我后，我可以继续逐个发布到这里。
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="workflow">
+      <div class="step"><div class="num">01 · UPLOAD</div><h4>加入 HTML 原型</h4><p>每个项目使用独立目录，保留 HTML、CSS、JS、图片等资源。</p></div>
+      <div class="step"><div class="num">02 · LINK</div><h4>生成在线地址</h4><p>例如 <code>/projects/project-a/</code>，PC 与手机都可直接打开。</p></div>
+      <div class="step"><div class="num">03 · QR</div><h4>生成二维码</h4><p>二维码固定指向项目地址，更新文件后二维码无需更换。</p></div>
+      <div class="step"><div class="num">04 · SHARE</div><h4>直接交付客户</h4><p>发送链接或二维码，即可进入真实可点击的交互原型。</p></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Prototype Hub · 静态 HTML 原型展示站 · Updated 2026-08-20</div>
+  </footer>
+
+  <script>
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(location.href);
+        const old = copyBtn.textContent;
+        copyBtn.textContent = '已复制 ✓';
+        setTimeout(() => copyBtn.textContent = old, 1400);
+      } catch {
+        prompt('复制这个链接：', location.href);
+      }
+    });
+  </script>
+</body>
+</html>
