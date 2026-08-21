@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 780">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#155e75"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs>
+  <rect width="360" height="780" rx="38" fill="#f8fafc"/><rect x="18" y="18" width="324" height="744" rx="28" fill="url(#g)"/>
+  <circle cx="65" cy="70" r="22" fill="#fff" opacity=".92"/><rect x="98" y="54" width="160" height="15" rx="8" fill="#fff" opacity=".92"/><rect x="98" y="82" width="110" height="10" rx="5" fill="#d1fae5"/>
+  <rect x="42" y="135" width="276" height="172" rx="22" fill="#fff" opacity=".96"/><circle cx="91" cy="192" r="28" fill="#d1fae5"/><path d="M91 174v36M73 192h36" stroke="#0f766e" stroke-width="8" stroke-linecap="round"/><rect x="136" y="168" width="130" height="16" rx="8" fill="#164e63"/><rect x="136" y="199" width="92" height="11" rx="6" fill="#94a3b8"/><rect x="136" y="223" width="108" height="11" rx="6" fill="#cbd5e1"/>
+  <g fill="#fff" opacity=".94"><rect x="42" y="334" width="132" height="124" rx="20"/><rect x="186" y="334" width="132" height="124" rx="20"/><rect x="42" y="474" width="276" height="162" rx="20"/></g>
+  <g fill="#0f766e"><circle cx="76" cy="370" r="16"/><circle cx="220" cy="370" r="16"/></g><rect x="66" y="408" width="78" height="11" rx="5" fill="#94a3b8"/><rect x="210" y="408" width="78" height="11" rx="5" fill="#94a3b8"/>
+  <text x="42" y="692" fill="#fff" font-family="Arial, PingFang SC, sans-serif" font-size="24" font-weight="700">XXX MEDICAL</text><text x="42" y="720" fill="#d1fae5" font-family="Arial, PingFang SC, sans-serif" font-size="14">服务流程演示界面</text>
+</svg>
