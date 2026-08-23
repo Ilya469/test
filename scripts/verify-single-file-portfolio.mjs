@@ -94,9 +94,10 @@ async function main() {
   assert.equal(home.images.every((image) => image.complete && image.width > 0), true, '首页存在未加载图片');
 
   await evaluate(`document.getElementById('aboutResumeBtn').click()`);
-  await waitFor(`(() => { const modal=document.getElementById('resumeModal'),doc=document.getElementById('resumeFrame')?.contentDocument; return modal?.classList.contains('is-open') && doc?.querySelector('.portrait')?.naturalWidth>0 && doc.body.innerText.includes('GrowthBud新加坡家庭成长与 AI 分析平台｜ 产品助理'); })()`);
-  const resume = await evaluate(`(() => { const doc=document.getElementById('resumeFrame').contentDocument; return {title:doc.title,photoWidth:doc.querySelector('.portrait')?.naturalWidth||0,text:doc.body.innerText.slice(0,120)}; })()`);
-  assert.ok(resume.photoWidth > 0, '简历证件照未加载');
+  await waitFor(`(() => { const modal=document.getElementById('resumeModal'),frame=document.getElementById('resumeFrame'); return modal?.classList.contains('is-open') && frame?.src.startsWith('blob:'); })()`);
+  const resume = await evaluate(`(() => { const frame=document.getElementById('resumeFrame'); return {title:frame.title,src:frame.src,modalTitle:document.getElementById('resumeModalTitle')?.textContent}; })()`);
+  assert.ok(resume.src.startsWith('blob:'), '最新版简历 PDF 未通过 Blob 加载');
+  assert.equal(resume.modalTitle, '吴凯明 · 最新简历');
   await evaluate(`document.getElementById('resumeCloseBtn').click()`);
 
   const ids = process.env.PROJECT_ID ? [process.env.PROJECT_ID] : ['medical', 'mall', 'sports', 'quote', 'hotel-supply', 'school', 'marathon'];

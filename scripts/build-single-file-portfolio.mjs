@@ -80,12 +80,11 @@ function inlineProjectAssets(html, projectId) {
 }
 
 let homepage = inlineHomepageAssets(read('index.html').toString('utf8'));
-const resumePreview = read('resume-preview.html').toString('utf8');
-const resumePayload = Buffer.from(resumePreview, 'utf8').toString('base64');
-const resumeBlobExpression = `URL.createObjectURL(new Blob([new TextDecoder().decode(Uint8Array.from(atob(document.getElementById('single-file-resume-payload').textContent.trim()),character=>character.charCodeAt(0)))],{type:'text/html;charset=utf-8'}))`;
+const resumePayload = read('assets/resume/wu-kaiming-product-manager-resume-2026.pdf').toString('base64');
+const resumeBlobExpression = `URL.createObjectURL(new Blob([Uint8Array.from(atob(document.getElementById('single-file-resume-payload').textContent.trim()),character=>character.charCodeAt(0))],{type:'application/pdf'}))`;
 homepage = homepage
-  .replace('if(!frame.src)frame.src=\'resume-preview.html\';', `if(!frame.src)frame.src=${resumeBlobExpression};`)
-  .replace('href="resume-preview.html" target="_blank" rel="noopener"', 'href="#" data-single-file-resume-new-window');
+  .replace("if(!frame.src)frame.src='assets/resume/wu-kaiming-product-manager-resume-2026.pdf#view=FitH';", `if(!frame.src)frame.src=${resumeBlobExpression};`)
+  .replace('href="assets/resume/wu-kaiming-product-manager-resume-2026.pdf" target="_blank" rel="noopener"', 'href="#" data-single-file-resume-new-window');
 for (const [id, relative] of projects) {
   homepage = homepage.replace(`href="${relative}"`, `href="#project-${id}" data-single-file-project="${id}"`);
 }
