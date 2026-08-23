@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>吴凯明 · 最新简历</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eceae6}.frame{display:block;width:100%;height:100%;border:0;background:#eceae6}
+</style>
+</head>
+<body>
+<iframe id="resumeFrame" class="frame" src="resume-preview.html" title="吴凯明最新简历"></iframe>
+<script>
+const frame=document.getElementById('resumeFrame');
+const NEW_URL='https://portfolio-ilya0923-d5gugeixz73cb24a6.webapps.tcloudbase.com/';
+function patchResume(){
+  try{
+    const doc=frame.contentDocument;
+    if(!doc||!doc.body)return;
+    let html=doc.body.innerHTML;
+    const replacements=[
+      ['2027 届｜可随时到岗','2027 届｜3个月内到岗'],
+      ['GrowthBud｜新加坡家庭成长与 AI 分析平台','GrowthBud新加坡家庭成长与 AI 分析平台｜ 产品助理'],
+      ['GrowthBud 新加坡家庭成长与 AI 分析平台','GrowthBud新加坡家庭成长与 AI 分析平台｜ 产品助理'],
+      ['CAN Sports Center｜多端场馆管理平台','CAN Sports Center多端场馆管理平台｜ 产品助理'],
+      ['CAN Sports Center 多端场馆管理平台','CAN Sports Center多端场馆管理平台｜ 产品助理'],
+      ['广州马拉松数字化服务项目｜产品助理 / 原型负责人','广州马拉松数字化服务项目｜ 产品助理'],
+      ['广州马拉松数字化服务项目｜产品助理','广州马拉松数字化服务项目｜ 产品助理'],
+      ['https://ilya469.github.io/test/?v=55ded5a',NEW_URL],
+      ['https://ilya0923-d5gugeixz73cb24a6-1473529863.ap-shanghai.app.tcloudbase.com/portfolio/',NEW_URL]
+    ];
+    for(const [a,b] of replacements) html=html.split(a).join(b);
+    if(html!==doc.body.innerHTML) doc.body.innerHTML=html;
+    doc.querySelectorAll('a').forEach(a=>{
+      const t=(a.textContent||'').trim();
+      const href=a.getAttribute('href')||'';
+      if(t.includes('个人作品集')||href.includes('ilya469.github.io')||href.includes('tcloudbase.com')){
+        a.href=NEW_URL;
+        if(t.includes('http')) a.textContent=NEW_URL;
+      }
+    });
+  }catch(e){}
+}
+frame.addEventListener('load',()=>{
+  let count=0;
+  const timer=setInterval(()=>{patchResume();if(++count>30)clearInterval(timer)},100);
+});
+</script>
+</body>
+</html>
